@@ -1,0 +1,48 @@
+package sample;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class decompress_string {
+    public static void main(String[] args){
+        //Scanner input = new Scanner(System.in);
+        String tmpString = "";
+        String tmpResult = "";
+        int maxCnt;
+        String result = "";
+        String tmpresult = "";
+        Stack stack = new Stack();
+        Stack stackSymbol = new Stack();
+        Character char1;
+        System.out.print("Enter your data: ");
+        String text = "2[abc]"; //input.next();
+        text = "2[abc]3[ab]c";
+       // text = "2[3[a]b]";
+        for(int i = 0; i < text.length(); i++){
+            char1 = text.charAt(i);
+            if(char1.toString().matches("[0-9]")) {
+                tmpString = tmpString + char1.toString();
+            }else if(char1.toString().equals("[")){
+                stack.push(tmpString);
+                stackSymbol.push("[");
+                tmpString = "";
+            }else if(char1.toString().equals("]")){
+                stackSymbol.pop();
+                maxCnt = Integer.valueOf(stack.pop().toString());
+                for (int j = 0; j < maxCnt; j++ ) {
+                    tmpResult += tmpString;
+                }
+
+                tmpString = "";
+            }else{
+                if (tmpResult != "") {
+                    tmpResult += char1.toString();
+                    tmpString = tmpResult;
+                }else{
+                    tmpString += char1.toString();
+                }
+            }
+        }
+        System.out.println("Decompress String: " + tmpResult + tmpString);
+    }
+}
